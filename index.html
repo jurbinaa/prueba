@@ -1,27 +1,9 @@
-<?php
-declare(strict_types=1);
-
-$server   = $_SERVER['SERVER_SOFTWARE'] ?? 'nginx';
-$phpVer   = phpversion();
-$hostname = gethostname() ?: 'desconocido';
-$ip       = $_SERVER['SERVER_ADDR'] ?? 'desconocido';
-$port     = $_SERVER['SERVER_PORT'] ?? '?';
-$now      = date('Y-m-d H:i:s');
-$uptime   = @shell_exec('uptime -p') ?: null;
-
-// Un ejemplo simple usando enums (PHP 8.1+) solo para mostrar que corre bien
-enum Estado: string {
-    case OK = 'operativo';
-    case DEGRADADO = 'degradado';
-}
-$estado = Estado::OK;
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ulaloud — CI/CD funcionando</title>
+    <title>Ulaloud — Sitio estático</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -101,30 +83,24 @@ $estado = Estado::OK;
 <body>
     <div class="container">
         <h1>Ulaloud</h1>
-        <p class="subtitle">Deploy vía Git CI/CD — <code><?= htmlspecialchars($estado->value) ?></code></p>
+        <p class="subtitle">Sitio 100% estático — sin PHP, sin backend</p>
 
         <div class="info-grid">
+            <div class="info-item">Tipo
+                <span>HTML estático</span>
+            </div>
             <div class="info-item">Servidor
-                <span><?= htmlspecialchars($server) ?></span>
+                <span>nginx</span>
             </div>
-            <div class="info-item">PHP
-                <span><?= htmlspecialchars($phpVer) ?></span>
+            <div class="info-item">Backend
+                <span>ninguno</span>
             </div>
-            <div class="info-item">Hostname
-                <span><?= htmlspecialchars($hostname) ?></span>
-            </div>
-            <div class="info-item">Puerto
-                <span><?= htmlspecialchars((string)$port) ?></span>
-            </div>
-            <div class="info-item">Fecha de carga
-                <span><?= htmlspecialchars($now) ?></span>
-            </div>
-            <div class="info-item">Uptime
-                <span><?= htmlspecialchars(trim($uptime ?? 'n/d')) ?></span>
+            <div class="info-item">Deploy
+                <span>Git CI/CD</span>
             </div>
         </div>
 
-        <div class="badge">Deploy exitoso — CI/CD activo</div>
+        <div class="badge">Deploy exitoso — sitio estático</div>
 
         <p class="footer">
             Cada <code>git push</code> a <code>main</code> + restart del servidor
